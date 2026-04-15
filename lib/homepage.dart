@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'match_card.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,8 +15,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(62, 73, 80, 1),
+          backgroundColor:  Color.fromRGBO(48, 55, 59, 1),
           title: Text("LiveX" ,style: GoogleFonts.bonaNovaSc(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -39,59 +41,37 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
         children: [
-           SingleChildScrollView(
-  child: Center(
-    child: Column(
-      children: [
-        SizedBox(height: 20),
 
-        Container(
-          padding: EdgeInsets.all(8),
-          height: 200,
-          width: 380,
-          decoration: BoxDecoration(color: const Color.fromARGB(255, 189, 216, 238),
-            borderRadius: BorderRadius.circular(10)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center ,
-              children: [
-                Text("•Live", textAlign: TextAlign.left, style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.red), ),
-              Text(
-        "IND vs AUS",
-        style: GoogleFonts.poppins(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),)
-              ],
-            ),
-        ),
+ListView(
+        children: const [
+          MatchCard(
+            team1: "IND",
+            team2: "AUS",
+            score: "120/3 (15.2)",
+            status: "India batting",
+          ),
+          MatchCard(
+            team1: "ENG",
+            team2: "SA",
+            score: "89/2 (12.1)",
+            status: "England batting",
+          ),
+          MatchCard(
+            team1: "PAK",
+            team2: "NZ",
+            score: "156/6 (18.4)",
+            status: "Pakistan batting",
+          ),
+        ],
+      ),
 
-        SizedBox(height: 20),
 
-        Container(
-          padding: EdgeInsets.all(8),
-          height: 200,
-          width: 380,
-          // color: Colors.red,
-          decoration: BoxDecoration(color: const Color.fromARGB(255, 189, 216, 238),
-            borderRadius: BorderRadius.circular(10)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("•Live", textAlign: TextAlign.left, style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.red), ),
-              ],
-            ),
-        ),
-      ],
-    ),
-  ),
-),
           Center(child: Text("For You")),
           Center(child: Text("Upcoming")),
           Center(child: Text("Finished")),
         ],
       )),
     );
-    
+
   }
 }
