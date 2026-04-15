@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# crex_clone
+# LiveX
 
 A new Flutter project.
 
