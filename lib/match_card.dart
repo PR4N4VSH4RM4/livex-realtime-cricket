@@ -4,27 +4,31 @@
 
 
   class MatchCard extends StatelessWidget {
-    final String team1;
-    final String team2;
-    final String score;
-    final String status;
+    // final String team1 = data['response']['items'];
+    // final String team2;
+    // final String score;
+    // final String status;
+    final Map match;
 
-    const MatchCard({
+     const MatchCard({
       super.key,
-      required this.team1,
-      required this.team2,
-      required this.score,
-      required this.status,
+      // required this.team1,
+      // required this.team2,
+      // required this.score,
+      // required this.status,
+      required this.match
     });
 
     @override
     Widget build(BuildContext context) {
+      final teamA = match['teama'];
+      final teamB = match['teamb'];
       return InkWell(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MatchDetailPage( team1: team1,
-          team2: team2,
-          score: score,
-          status: status,)));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => MatchDetailPage( team1: team1,
+          // team2: team2,
+          // score: score,
+          // status: status,)));
         },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -41,16 +45,16 @@
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Text(
+                  //   "LIVE",
+                  //   style: GoogleFonts.poppins(
+                  //     color: Colors.red,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   Text(
-                    "LIVE",
-                    style: GoogleFonts.poppins(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                  Text(
-                    status,
+                    match['status_str'].toString().toUpperCase(),
                     style: GoogleFonts.poppins(
                       color: Colors.grey,
                       fontSize: 12,
@@ -59,51 +63,45 @@
                 ],
               ),
         
-              const SizedBox(height: 10),
-        
-              // TEAMS
-              Text(
-                "$team1 vs $team2",
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-        
-              const SizedBox(height: 6),
-        
-              // SCORE
-              Text(
-                score,
-                style: GoogleFonts.poppins(
-                  color: Colors.greenAccent,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-        
-              const SizedBox(height: 10),
-        
-              // VIEW DETAILS
+             const SizedBox(height: 10),
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    "View Details",
-                    style: GoogleFonts.poppins(
-                      color: Colors.blueAccent,
-                      fontSize: 13,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(Icons.arrow_forward_ios,
-                      size: 12, color: Colors.blueAccent),
+                  Image.network(teamA['logo_url'], height: 24),
+                  const SizedBox(width: 8),
+                  Text(teamA['short_name'],
+                      style: const TextStyle(color: Colors.white)),
+                  const Spacer(),
+                  Text(teamA['scores'] ?? "-",
+                      style: const TextStyle(color: Colors.white)),
                 ],
+              ),
+
+              const SizedBox(height: 6),
+
+              Row(
+                children: [
+                  Image.network(teamB['logo_url'], height: 24),
+                  const SizedBox(width: 8),
+                  Text(teamB['short_name'],
+                      style: const TextStyle(color: Colors.white)),
+                  const Spacer(),
+                  Text(teamB['scores'] ?? "-",
+                      style: const TextStyle(color: Colors.white)),
+                ],
+              ),
+
+              const SizedBox(height: 10),
+
+              Text(
+                match['status_note'] ?? "",
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
         ),
       );
-    }
-  }
+    
+    
+  }}
+

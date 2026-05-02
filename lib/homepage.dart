@@ -1,3 +1,4 @@
+import 'package:crex_clone/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'match_card.dart';
@@ -41,30 +42,33 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
         children: [
+FutureBuilder(
+  future: ApiService.getlivematch(),
+  builder: (context, snapshot) {
 
-ListView(
-        children: const [
-          MatchCard(
-            team1: "IND",
-            team2: "AUS",
-            score: "120/3 (15.2)",
-            status: "India batting",
-          ),
-          MatchCard(
-            team1: "ENG",
-            team2: "SA",
-            score: "89/2 (12.1)",
-            status: "England batting",
-          ),
-          MatchCard(
-            team1: "PAK",
-            team2: "NZ",
-            score: "156/6 (18.4)",
-            status: "Pakistan batting",
-          ),
-        ],
-      ),
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
+    if (snapshot.hasError) {
+      return Center(child: Text("Error: ${snapshot.error}"));
+    }
+    if(!snapshot.hasData || snapshot.data == null ){
+      return const Center(child: Text("NULL"),);
+    }
+
+    final matches = snapshot.data;
+
+    return ListView.builder(
+      itemCount: matches?.length ?? 0,
+      itemBuilder: (context, index) {
+        final match = matches![index];
+
+        return MatchCard(match: match);
+      },
+    );
+  },
+),
 
           Center(child: Text("For You")),
           Center(child: Text("Upcoming")),
